@@ -21,7 +21,8 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        buildConfigField("String", "GOOGLE_VISION_API_KEY", "\"AIzaSyCXsP--ZD0AucY0rDZIrEEjHGnOEVs2H80\"")
+        val googleVisionApiKey = project.findProperty("GOOGLE_VISION_API_KEY") as? String ?: ""
+        buildConfigField("String", "GOOGLE_VISION_API_KEY", "\"${googleVisionApiKey}\"")
     }
 
     signingConfigs {

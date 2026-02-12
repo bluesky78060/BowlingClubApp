@@ -6,6 +6,10 @@
 # This line might already exist in your local.properties
 sdk.dir=/Users/YOUR_USERNAME/Library/Android/sdk
 
+## Google Cloud Vision API Key
+# Get your API key from Google Cloud Console: https://console.cloud.google.com/apis/credentials
+GOOGLE_VISION_API_KEY=your_api_key_here
+
 ## Release Signing Configuration
 # Uncomment and configure these properties for release builds:
 
