@@ -9,8 +9,11 @@ import com.bowlingclub.app.data.local.entity.Member
 import com.bowlingclub.app.data.local.entity.Tournament
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.firstOrNull
+import java.io.BufferedReader
 import java.io.File
 import java.io.FileWriter
+import java.io.InputStreamReader
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import javax.inject.Inject
@@ -151,6 +154,95 @@ class CsvExporter @Inject constructor(
         Result.success(uri)
     } catch (e: Exception) {
         Result.failure(e)
+    }
+
+    /**
+     * CSV 파일에서 회원 데이터 가져오기
+     * 형식: 이름,닉네임,성별,연락처,활동상태,가입일
+     */
+    suspend fun importMembers(uri: Uri): Result<Int> = try {
+        val members = mutableListOf<Member>()
+
+        context.contentResolver.openInputStream(uri)?.use { inputStream ->
+            BufferedReader(InputStreamReader(inputStream, Charsets.UTF_8)).use { reader ->
+                var firstLine = true
+                var line: String?
+
+                while (reader.readLine().also { line = it } != null) {
+                    val currentLine = line!!.trim()
+                        .removePrefix("\uFEFF") // BOM 제거
+
+                    if (currentLine.isBlank()) continue
+
+                    // 첫 줄은 헤더 → 스킵
+                    if (firstLine) {
+                        firstLine = false
+                        continue
+                    }
+
+                    val fields = parseCsvLine(currentLine)
+                    if (fields.size < 1) continue
+
+                    val name = fields[0].trim()
+                    if (name.isBlank()) continue
+
+                    val nickname = fields.getOrNull(1)?.trim()?.ifBlank { null }
+                    val genderRaw = fields.getOrNull(2)?.trim() ?: ""
+                    val gender = if (genderRaw == "여" || genderRaw == "F") "F" else "M"
+                    val phoneNumber = fields.getOrNull(3)?.trim()?.ifBlank { null }
+                    val activeRaw = fields.getOrNull(4)?.trim() ?: "활동중"
+                    val isActive = activeRaw != "비활동"
+                    val joinDateStr = fields.getOrNull(5)?.trim() ?: ""
+                    val joinDate = try {
+                        LocalDate.parse(joinDateStr)
+                    } catch (e: Exception) {
+                        LocalDate.now()
+                    }
+
+                    members.add(
+                        Member(
+                            name = name,
+                            nickname = nickname,
+                            gender = gender,
+                            phoneNumber = phoneNumber,
+                            isActive = isActive,
+                            joinDate = joinDate,
+                            createdAt = LocalDateTime.now(),
+                            updatedAt = LocalDateTime.now()
+                        )
+                    )
+                }
+            }
+        } ?: throw Exception("파일을 열 수 없습니다")
+
+        if (members.isEmpty()) throw Exception("가져올 회원 데이터가 없습니다")
+
+        database.memberDao().insertAll(members)
+        Result.success(members.size)
+    } catch (e: Exception) {
+        Result.failure(e)
+    }
+
+    /**
+     * CSV 한 줄을 파싱 (따옴표 처리 포함)
+     */
+    private fun parseCsvLine(line: String): List<String> {
+        val fields = mutableListOf<String>()
+        val current = StringBuilder()
+        var inQuotes = false
+
+        for (char in line) {
+            when {
+                char == '"' -> inQuotes = !inQuotes
+                char == ',' && !inQuotes -> {
+                    fields.add(current.toString())
+                    current.clear()
+                }
+                else -> current.append(char)
+            }
+        }
+        fields.add(current.toString())
+        return fields
     }
 
     /**

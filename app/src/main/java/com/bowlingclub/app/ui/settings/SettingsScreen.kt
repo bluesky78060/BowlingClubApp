@@ -91,6 +91,12 @@ fun SettingsScreen(
         uri?.let { viewModel.restoreFromUri(it) }
     }
 
+    val csvImportLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.OpenDocument()
+    ) { uri: Uri? ->
+        uri?.let { viewModel.importMembersCsv(it) }
+    }
+
     LaunchedEffect(uiState.isSaved) {
         if (uiState.isSaved) {
             scope.launch {
@@ -181,7 +187,10 @@ fun SettingsScreen(
                 onRestoreClick = { restoreLauncher.launch(arrayOf("application/json")) },
                 onShareClick = viewModel::shareBackup,
                 onExportScoresCsvClick = viewModel::exportScoresCsv,
-                onExportMembersCsvClick = viewModel::exportMembersCsv
+                onExportMembersCsvClick = viewModel::exportMembersCsv,
+                onImportMembersCsvClick = {
+                    csvImportLauncher.launch(arrayOf("text/csv", "text/comma-separated-values", "*/*"))
+                }
             )
 
             AutoBackupSection(
@@ -297,6 +306,7 @@ private fun BackupSection(
     onShareClick: () -> Unit,
     onExportScoresCsvClick: () -> Unit,
     onExportMembersCsvClick: () -> Unit,
+    onImportMembersCsvClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     SettingsCard(
@@ -409,6 +419,27 @@ private fun BackupSection(
             ) {
                 Text(
                     text = "회원 CSV 내보내기",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+
+            HorizontalDivider(
+                modifier = Modifier.padding(vertical = 4.dp),
+                color = MaterialTheme.colorScheme.outlineVariant
+            )
+
+            // 회원 CSV 가져오기
+            Button(
+                onClick = onImportMembersCsvClick,
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isBackupInProgress && !isRestoreInProgress,
+                shape = MaterialTheme.shapes.medium,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = MaterialTheme.colorScheme.tertiary
+                )
+            ) {
+                Text(
+                    text = "회원 CSV 가져오기",
                     style = MaterialTheme.typography.labelLarge
                 )
             }

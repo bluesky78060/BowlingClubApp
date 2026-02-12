@@ -198,6 +198,31 @@ class SettingsViewModel @Inject constructor(
         })
     }
 
+    // ── CSV 가져오기 ────────────────────────────────────────
+
+    fun importMembersCsv(uri: Uri) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isRestoreInProgress = true) }
+            csvExporter.importMembers(uri)
+                .onSuccess { count ->
+                    _uiState.update {
+                        it.copy(
+                            isRestoreInProgress = false,
+                            backupMessage = "회원 ${count}명을 가져왔습니다"
+                        )
+                    }
+                }
+                .onFailure { e ->
+                    _uiState.update {
+                        it.copy(
+                            isRestoreInProgress = false,
+                            backupMessage = "회원 CSV 가져오기 실패: ${e.message}"
+                        )
+                    }
+                }
+        }
+    }
+
     // ── 자동 백업 ──────────────────────────────────────────
 
     fun toggleAutoBackup(enabled: Boolean) {
