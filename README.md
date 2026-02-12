@@ -16,8 +16,8 @@ Android 네이티브 애플리케이션으로 볼링클럽 운영진을 위한 �
 - **순위 산출**: 자동 순위 계산 및 순위 이력 추적
 
 ### OCR 점수 인식
-- **Naver CLOVA OCR** 통합: 점수표 사진 자동 인식 (무료 티어)
-- **한국어 최적화**: 네이버 AI 기반 한국어 손글씨 인식
+- **Google Cloud Vision** 통합: 점수표 사진 자동 인식
+- **한국어 최적화**: Google AI 기반 한국어 손글씨 인식
 - **빠른 입력**: 대량 점수 입력 시간 단축
 
 ### 핸디캡 시스템
@@ -59,7 +59,7 @@ Android 네이티브 애플리케이션으로 볼링클럽 운영진을 위한 �
 | **HTTP 클라이언트** | Retrofit + OkHttp |
 | **이미지 처리** | CameraX, Canvas API |
 | **차트/그래프** | MPAndroidChart |
-| **AI/비전** | Naver CLOVA OCR API (무료 티어) |
+| **AI/비전** | Google Cloud Vision API |
 | **JSON 직렬화** | Gson |
 | **아키텍처 패턴** | MVVM (ViewModel + Repository) |
 
@@ -177,7 +177,7 @@ Data Layer (Room DB + API)
 | **UI Layer** | Jetpack Compose를 사용한 선언형 UI |
 | **ViewModel** | UI 상태 관리 및 사용자 이벤트 처리 |
 | **Repository** | DAO, API, 외부 데이터소스 통합 |
-| **Data Layer** | Room 로컬 DB, Naver CLOVA OCR API 등 |
+| **Data Layer** | Room 로컬 DB, Google Cloud Vision API 등 |
 
 ### 핵심 디자인 원칙
 - **단일 책임 원칙**: 각 클래스는 하나의 책임만 수행
@@ -194,7 +194,7 @@ Data Layer (Room DB + API)
 | 1 | 기본 UI 구축 | 메인 화면, 회원 목록, 기본 네비게이션 |
 | 2 | 회원 관리 | 등록, 수정, 삭제, 상태 관리 |
 | 3 | 정기전 관리 | 정기전 생성, 기본 점수 입력 |
-| 4 | OCR 및 Vision | Naver CLOVA OCR API 통합 |
+| 4 | OCR 및 Vision | Google Cloud Vision API 통합 |
 | 5 | 팀 편성 시스템 | 수동/자동 팀 편성 알고리즘 |
 | 6 | 통계 및 차트 | 데이터 분석 및 시각화 |
 | 7 | 공유 기능 | 이미지 생성, 카카오톡 공유 |
@@ -204,11 +204,10 @@ Data Layer (Room DB + API)
 
 ### API 키 관리
 
-1. **Naver CLOVA OCR API 키**
+1. **Google Cloud Vision API 키**
    - `local.properties` 파일에 추가:
    ```properties
-   naver_ocr_secret_key=your-ocr-secret-key-here
-   naver_ocr_api_url=https://your-domain.apigw.ntruss.com/custom/v1/your-domain-id/general
+   google_vision_api_key=your-google-vision-api-key-here
    ```
 
 2. **ProGuard 규칙** (릴리즈 빌드)
