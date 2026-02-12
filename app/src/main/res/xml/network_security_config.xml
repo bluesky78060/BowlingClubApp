@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">apigw.ntruss.com</domain>
+    </domain-config>
+    <default-config cleartextTrafficPermitted="false" />
+</network-security-config>

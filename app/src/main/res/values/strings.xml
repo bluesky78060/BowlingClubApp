@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 앱 이름 -->
+    <string name="app_name">볼링클럽</string>
+
+    <!-- 탭 메뉴 -->
+    <string name="tab_home">홈</string>
+    <string name="tab_tournaments">정기전</string>
+    <string name="tab_members">회원</string>
+    <string name="tab_statistics">통계</string>
+    <string name="tab_settings">설정</string>
+
+    <!-- 회원 관련 -->
+    <string name="member_list">회원 목록</string>
+    <string name="member_registration">회원 등록</string>
+    <string name="member_edit">회원 수정</string>
+    <string name="member_detail">회원 상세</string>
+    <string name="member_name">이름</string>
+    <string name="member_nickname">별명</string>
+    <string name="member_phone">연락처</string>
+    <string name="member_gender">성별</string>
+    <string name="member_memo">메모</string>
+    <string name="member_join_date">가입일</string>
+    <string name="member_status">상태</string>
+    <string name="member_profile_image">프로필 사진</string>
+
+    <!-- 상태 -->
+    <string name="status_active">활동</string>
+    <string name="status_inactive">휴면</string>
+
+    <!-- 성별 -->
+    <string name="gender_male">남성</string>
+    <string name="gender_female">여성</string>
+
+    <!-- 버튼 -->
+    <string name="button_save">저장</string>
+    <string name="button_cancel">취소</string>
+    <string name="button_delete">삭제</string>
+    <string name="button_search">검색</string>
+    <string name="button_confirm">확인</string>
+    <string name="button_add">추가</string>
+    <string name="button_edit">수정</string>
+    <string name="button_back">돌아가기</string>
+    <string name="button_camera">카메라</string>
+    <string name="button_gallery">갤러리</string>
+
+    <!-- 다이얼로그 -->
+    <string name="dialog_delete_confirm">삭제 확인</string>
+    <string name="dialog_delete_message">정말 삭제하시겠습니까?</string>
+    <string name="dialog_error">오류</string>
+    <string name="dialog_success">완료</string>
+
+    <!-- 빈 상태 -->
+    <string name="empty_member_list">등록된 회원이 없습니다</string>
+    <string name="empty_tournament_list">등록된 정기전이 없습니다</string>
+
+    <!-- 정기전 관련 -->
+    <string name="tournament_list">정기전 목록</string>
+    <string name="tournament_registration">정기전 등록</string>
+    <string name="tournament_name">대회명</string>
+    <string name="tournament_date">개최일</string>
+    <string name="tournament_location">장소</string>
+    <string name="tournament_description">설명</string>
+
+    <!-- 통계 -->
+    <string name="statistics_title">통계</string>
+    <string name="statistics_total_members">전체 회원</string>
+    <string name="statistics_active_members">활동 회원</string>
+
+    <!-- 설정 -->
+    <string name="settings_title">설정</string>
+    <string name="settings_app_version">앱 버전</string>
+    <string name="settings_about">정보</string>
+
+    <!-- 에러 메시지 -->
+    <string name="error_invalid_name">이름을 입력해주세요</string>
+    <string name="error_invalid_phone">연락처를 입력해주세요</string>
+    <string name="error_save_failed">저장 실패</string>
+    <string name="error_delete_failed">삭제 실패</string>
+    <string name="error_load_failed">불러오기 실패</string>
+
+    <!-- 성공 메시지 -->
+    <string name="success_save">저장되었습니다</string>
+    <string name="success_delete">삭제되었습니다</string>
+    <string name="success_update">수정되었습니다</string>
+</resources>

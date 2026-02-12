@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<full-backup-content>
+    <!-- App data backup rules for Auto Backup for Android -->
+    <include domain="database" path="." />
+    <include domain="sharedpref" path="." />
+    <include domain="root" path="files/." />
+
+    <!-- Exclude sensitive files -->
+    <exclude domain="sharedpref" path="sensitive_prefs.xml" />
+    <exclude domain="cache" path="." />
+
+    <!-- Exclude temporary files -->
+    <exclude domain="root" path="temp/." />
+    <exclude domain="root" path="cache/." />
+</full-backup-content>

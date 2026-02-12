@@ -1,0 +1,32 @@
+# Local Properties Template
+# Copy this file to local.properties and fill in your actual values
+# NEVER commit local.properties to version control
+
+## SDK Location
+# This line might already exist in your local.properties
+sdk.dir=/Users/YOUR_USERNAME/Library/Android/sdk
+
+## Release Signing Configuration
+# Uncomment and configure these properties for release builds:
+
+# Path to your release keystore file
+#RELEASE_KEYSTORE_FILE=/path/to/your/release.keystore
+
+# Keystore password
+#RELEASE_KEYSTORE_PASSWORD=your_keystore_password
+
+# Key alias
+#RELEASE_KEY_ALIAS=your_key_alias
+
+# Key password
+#RELEASE_KEY_PASSWORD=your_key_password
+
+## How to Generate a Release Keystore
+# Run this command in your terminal:
+# keytool -genkey -v -keystore release.keystore -alias bowlingclub -keyalg RSA -keysize 2048 -validity 10000
+
+## Security Notes:
+# 1. Keep your keystore file safe and backed up
+# 2. NEVER commit keystore or passwords to git
+# 3. Add local.properties to .gitignore (should already be there)
+# 4. Store keystore backup in a secure location
