@@ -33,7 +33,6 @@ object DatabaseModule {
             "bowling_club_db"
         )
             .addMigrations(MIGRATION_3_4)
-            .fallbackToDestructiveMigration()
             .build()
     }
 

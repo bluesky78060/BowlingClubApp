@@ -45,6 +45,15 @@ interface GameScoreDao {
     @Query("SELECT * FROM game_scores")
     fun getAllScores(): Flow<List<GameScore>>
 
+    @Query("SELECT COUNT(*) FROM game_scores")
+    fun getTotalGameCount(): Flow<Int>
+
+    @Query("SELECT AVG(finalScore) FROM game_scores")
+    fun getOverallAverageScore(): Flow<Double?>
+
+    @Query("SELECT MAX(finalScore) FROM game_scores")
+    fun getOverallHighScore(): Flow<Int?>
+
     @Query("SELECT COUNT(*) FROM game_scores WHERE memberId = :memberId AND finalScore BETWEEN :minScore AND :maxScore")
     fun getScoreCountByRange(memberId: Int, minScore: Int, maxScore: Int): Flow<Int>
 

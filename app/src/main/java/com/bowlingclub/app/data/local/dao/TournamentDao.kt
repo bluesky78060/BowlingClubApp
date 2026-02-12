@@ -22,6 +22,9 @@ interface TournamentDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(tournament: Tournament): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(tournaments: List<Tournament>)
+
     @Update
     suspend fun update(tournament: Tournament)
 

@@ -18,7 +18,7 @@ import com.bowlingclub.app.data.local.entity.*
         Setting::class
     ],
     version = 4,
-    exportSchema = false
+    exportSchema = true
 )
 @TypeConverters(DateConverters::class)
 abstract class BowlingClubDatabase : RoomDatabase() {

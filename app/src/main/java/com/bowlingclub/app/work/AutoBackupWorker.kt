@@ -56,7 +56,7 @@ class AutoBackupWorker @AssistedInject constructor(
                 .cancelUniqueWork(WORK_NAME)
         }
 
-        fun isScheduled(context: Context): Boolean {
+        suspend fun isScheduled(context: Context): Boolean {
             val workInfos = WorkManager.getInstance(context)
                 .getWorkInfosForUniqueWork(WORK_NAME)
                 .get()

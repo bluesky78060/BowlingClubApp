@@ -93,22 +93,16 @@ class StatisticsRepository @Inject constructor(
      */
     fun getClubStats(): Flow<ClubStats> {
         return combine(
-            gameScoreDao.getAllScores(),
+            gameScoreDao.getTotalGameCount(),
+            gameScoreDao.getOverallAverageScore(),
+            gameScoreDao.getOverallHighScore(),
             memberRepository.getActiveMembers(),
             tournamentRepository.getAllTournaments()
-        ) { allScores, activeMembers, tournaments ->
-            val totalGames = allScores.size
-            val overallAverage = if (allScores.isNotEmpty()) {
-                allScores.map { it.finalScore }.average()
-            } else {
-                0.0
-            }
-            val highestScore = allScores.maxOfOrNull { it.finalScore } ?: 0
-
+        ) { totalGames, overallAverage, highestScore, activeMembers, tournaments ->
             ClubStats(
                 totalGames = totalGames,
-                overallAverage = overallAverage,
-                highestScore = highestScore,
+                overallAverage = overallAverage ?: 0.0,
+                highestScore = highestScore ?: 0,
                 activeMemberCount = activeMembers.size,
                 totalTournaments = tournaments.size
             )

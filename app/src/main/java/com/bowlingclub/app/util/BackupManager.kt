@@ -143,29 +143,17 @@ class BackupManager @Inject constructor(
                 database.memberDao().deleteAll()
                 database.settingDao().deleteAll()
 
-                backupData.members?.forEach { member ->
-                    database.memberDao().insert(member)
-                }
+                backupData.members?.let { database.memberDao().insertAll(it) }
 
-                backupData.tournaments?.forEach { tournament ->
-                    database.tournamentDao().insert(tournament)
-                }
+                backupData.tournaments?.let { database.tournamentDao().insertAll(it) }
 
-                backupData.participants?.forEach { participant ->
-                    database.tournamentParticipantDao().insert(participant)
-                }
+                backupData.participants?.let { database.tournamentParticipantDao().insertAll(it) }
 
-                backupData.scores?.forEach { score ->
-                    database.gameScoreDao().insert(score)
-                }
+                backupData.scores?.let { database.gameScoreDao().insertAll(it) }
 
-                backupData.teams?.forEach { team ->
-                    database.teamDao().insert(team)
-                }
+                backupData.teams?.let { database.teamDao().insertAll(it) }
 
-                backupData.teamMembers?.forEach { teamMember ->
-                    database.teamMemberDao().insert(teamMember)
-                }
+                backupData.teamMembers?.let { database.teamMemberDao().insertAll(it) }
 
                 backupData.settings?.forEach { setting ->
                     database.settingDao().insertOrUpdate(setting)

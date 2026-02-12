@@ -23,9 +23,6 @@
 }
 
 # Keep Kotlin standard library exceptions
--keep class kotlin.* { *; }
--keep class kotlin.jvm.** { *; }
--keep interface kotlin.** { *; }
 
 # --- Kotlin Coroutines ---
 -keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
@@ -111,9 +108,6 @@
 # OkHttp
 -dontwarn okhttp3.**
 -dontwarn okio.**
--keep class okhttp3.** { *; }
--keep interface okhttp3.** { *; }
--keep class okio.** { *; }
 
 # --- Gson ---
 # Keep all @SerializedName annotations
@@ -276,6 +270,12 @@
 # -printseeds seeds.txt
 # -printusage usage.txt
 # -printconfiguration configuration.txt
+
+# --- Strip Debug Logs in Release ---
+-assumenosideeffects class android.util.Log {
+    public static int d(...);
+    public static int v(...);
+}
 
 # ============================================
 # END OF PROGUARD RULES

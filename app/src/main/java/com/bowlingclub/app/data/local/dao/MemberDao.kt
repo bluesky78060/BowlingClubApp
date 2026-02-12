@@ -34,6 +34,12 @@ interface MemberDao {
     @Query("SELECT COUNT(*) FROM members WHERE isActive = 1")
     fun getActiveMemberCount(): Flow<Int>
 
+    @Query("SELECT * FROM members WHERE id IN (:ids)")
+    suspend fun getMembersByIds(ids: List<Int>): List<Member>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(members: List<Member>)
+
     @Query("DELETE FROM members")
     suspend fun deleteAll()
 }
