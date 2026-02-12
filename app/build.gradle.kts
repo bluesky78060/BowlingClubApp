@@ -6,6 +6,15 @@ plugins {
     id("com.google.dagger.hilt.android")
 }
 
+import java.util.Properties
+import java.io.FileInputStream
+
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localProperties.load(FileInputStream(localPropertiesFile))
+}
+
 android {
     namespace = "com.bowlingclub.app"
     compileSdk = 35
@@ -21,7 +30,7 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        val googleVisionApiKey = project.findProperty("GOOGLE_VISION_API_KEY") as? String ?: ""
+        val googleVisionApiKey = localProperties.getProperty("GOOGLE_VISION_API_KEY") ?: ""
         buildConfigField("String", "GOOGLE_VISION_API_KEY", "\"${googleVisionApiKey}\"")
     }
 
@@ -29,10 +38,10 @@ android {
         create("release") {
             // These values should be set via environment variables or local.properties
             // DO NOT commit actual keystore credentials
-            val keystoreFile = project.findProperty("RELEASE_KEYSTORE_FILE") as? String
-            val keystorePassword = project.findProperty("RELEASE_KEYSTORE_PASSWORD") as? String
-            val keyAlias = project.findProperty("RELEASE_KEY_ALIAS") as? String
-            val keyPassword = project.findProperty("RELEASE_KEY_PASSWORD") as? String
+            val keystoreFile = localProperties.getProperty("RELEASE_KEYSTORE_FILE")
+            val keystorePassword = localProperties.getProperty("RELEASE_KEYSTORE_PASSWORD")
+            val keyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
+            val keyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD")
 
             if (keystoreFile != null) {
                 storeFile = file(keystoreFile)
